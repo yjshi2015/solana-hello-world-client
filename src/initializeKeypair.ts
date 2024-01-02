@@ -20,6 +20,8 @@ export async function initializeKeypair(
     const secretKey = Uint8Array.from(secret)
     const keypairFromSecretKey = web3.Keypair.fromSecretKey(secretKey)
     await airdropSolIfNeeded(keypairFromSecretKey, connection)
+    const wallet_address = keypairFromSecretKey.publicKey.toString()
+    console.log("wallet_address1: ", wallet_address)
     return keypairFromSecretKey
 }
 
@@ -27,6 +29,8 @@ async function airdropSolIfNeeded(
     signer: web3.Keypair,
     connection: web3.Connection
 ) {
+    const wallet_address = signer.publicKey.toString()
+    console.log("wallet_address2: ", wallet_address)
     const balance = await connection.getBalance(signer.publicKey)
     console.log("Current balance is", balance / web3.LAMPORTS_PER_SOL)
     if (balance < web3.LAMPORTS_PER_SOL) {
